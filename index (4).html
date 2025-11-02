@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renewable Energy Systems - Educational Hub</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-gray-300-rgb: 167, 169, 169;
+            --color-gray-400-rgb: 119, 124, 124;
+            
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-primary-active: var(--color-teal-700);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-btn-primary-text: var(--color-cream-50);
+            
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: rgba(50, 184, 198, 1);
+                --color-primary-hover: rgba(45, 166, 178, 1);
+                --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+                --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-btn-primary-text: var(--color-slate-900);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            padding: var(--space-24);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            left: -280px;
+            transition: left var(--duration-normal) var(--ease-standard);
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .menu-toggle {
+            position: fixed;
+            top: var(--space-20);
+            left: var(--space-20);
+            z-index: 1001;
+            background-color: var(--color-primary);
+            color: var(--color-btn-primary-text);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: var(--shadow-md);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .menu-toggle:hover {
+            background-color: var(--color-primary-hover);
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--duration-normal) var(--ease-standard), visibility var(--duration-normal) var(--ease-standard);
+            z-index: 999;
+        }
+
+        .overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar h1 {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-24);
+            color: var(--color-primary);
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: var(--space-12);
+        }
+
+        .nav-link {
+            display: block;
+            padding: var(--space-12) var(--space-16);
+            background-color: var(--color-secondary);
+            border-radius: var(--radius-base);
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            transition: all var(--duration-normal) var(--ease-standard);
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background-color: var(--color-secondary-hover);
+        }
+
+        .nav-link.active {
+            background-color: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .main-content {
+            margin-left: 0;
+            flex: 1;
+            padding: var(--space-32);
+            padding-left: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .activity-section {
+            display: none;
+        }
+
+        .activity-section.active {
+            display: block;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+            color: var(--color-btn-primary-text);
+            padding: var(--space-32);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-32);
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+            background-image: url('https://images.unsplash.com/photo-1509390144185-d1f52de93dd5?w=1200&q=80');
+        }
+
+            background-image: url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1200&q=80');
+        }
+
+            background-image: url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1200&q=80');
+        }
+
+        .header h2 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-12);
+        }
+
+        .header p {
+            font-size: var(--font-size-lg);
+            opacity: 0.95;
+        }
+
+        .content-card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-32);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .content-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .content-card h3 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--space-16);
+            color: var(--color-text);
+        }
+
+        .diagram {
+            background-color: var(--color-background);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-base);
+            padding: var(--space-32);
+            margin: var(--space-24) 0;
+            text-align: center;
+        }
+
+        .diagram-title {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--space-24);
+            color: var(--color-primary);
+        }
+
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-16);
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-secondary) 100%);
+            border: 2px solid var(--color-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-16) var(--space-24);
+            font-weight: var(--font-weight-medium);
+            min-width: 250px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .flow-box:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        .flow-arrow {
+            font-size: var(--font-size-3xl);
+            color: var(--color-primary);
+        }
+
+        .explanation {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            margin-bottom: var(--space-16);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-20);
+            margin-top: var(--space-24);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, rgba(var(--color-teal-500-rgb), 0.08) 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--space-20);
+            border: 1px solid var(--color-card-border);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .info-box:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-primary);
+        }
+
+        .info-box h4 {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--space-8);
+            color: var(--color-text);
+        }
+
+        .info-box p {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+        }            @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+            }
+
+            .main-content {
+                padding: var(--space-20);
+                padding-left: var(--space-20);
+            }
+
+            .flow-box {
+                min-width: 200px;
+            }
+
+            .header {
+                min-height: 200px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <div class="overlay" id="overlay"></div>
+    
+    <aside class="sidebar" id="sidebar">
+        <h1>🌱 Renewable Energy</h1>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a class="nav-link active" data-activity="home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-activity="activity1">Tidal Energy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-activity="activity2">Biomass Energy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-activity="activity3">Geothermal Energy</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <!-- Home Page -->
+        <section class="activity-section active" id="home">
+            <div class="header" style="background: linear-gradient(135deg, rgba(33, 128, 141, 0.95) 0%, rgba(29, 116, 128, 0.95) 100%), url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&q=80'); background-size: cover; background-position: center; min-height: 400px;">
+                <div class="header-content">
+                    <h2>🌱 Renewable Energy Systems</h2>
+                    <p>Explore the Future of Sustainable Power Generation</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Welcome to Renewable Energy Hub</h3>
+                <p class="explanation">
+                    This educational platform provides comprehensive insights into three major renewable energy systems: Tidal, Biomass, and Geothermal energy. Each section includes detailed system architectures, conversion processes, and real-world applications to help you understand how these sustainable technologies are transforming our energy landscape.
+                </p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-box" style="cursor: pointer; border: 2px solid transparent;" onclick="navigateToActivity('activity1')">
+                    <h4>🌊 Tidal Energy</h4>
+                    <p>Harness the predictable power of ocean tides for reliable electricity generation. Learn about tidal barrages, turbines, and coastal power stations.</p>
+                    <p style="margin-top: 12px; color: var(--color-primary); font-weight: 500;">Explore Activity 1 →</p>
+                </div>
+                <div class="info-box" style="cursor: pointer; border: 2px solid transparent;" onclick="navigateToActivity('activity2')">
+                    <h4>🌾 Biomass Energy</h4>
+                    <p>Convert organic materials into sustainable energy. Discover combustion, gasification, and anaerobic digestion processes for renewable power.</p>
+                    <p style="margin-top: 12px; color: var(--color-primary); font-weight: 500;">Explore Activity 2 →</p>
+                </div>
+                <div class="info-box" style="cursor: pointer; border: 2px solid transparent;" onclick="navigateToActivity('activity3')">
+                    <h4>🌋 Geothermal Energy</h4>
+                    <p>Tap into Earth's internal heat for continuous base-load power. Understand deep drilling, steam extraction, and geothermal plants.</p>
+                    <p style="margin-top: 12px; color: var(--color-primary); font-weight: 500;">Explore Activity 3 →</p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top: 32px;">
+                <h3>Why Renewable Energy Matters</h3>
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>🌍 Climate Action</h4>
+                        <p>Reduce carbon emissions and combat climate change with clean energy alternatives</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>♻️ Sustainability</h4>
+                        <p>Infinite energy sources that don't deplete natural resources for future generations</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>⚡ Energy Security</h4>
+                        <p>Reduce dependence on fossil fuels and create resilient local energy systems</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>💼 Economic Growth</h4>
+                        <p>Create green jobs and stimulate innovation in clean technology sectors</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity 1: Tidal Energy -->
+        <section class="activity-section" id="activity1">
+            <div class="header">
+                <div class="header-content">
+                    <h2>🌊 Activity 1: Tidal Energy</h2>
+                    <p>Harnessing the power of ocean tides for renewable electricity generation</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Visual Overview</h3>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="Tidal energy turbines underwater" style="width: 100%; max-width: 800px; border-radius: 12px; box-shadow: var(--shadow-md);">
+                    <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 8px;">Tidal turbines harnessing ocean energy</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>System Architecture</h3>
+                <div class="diagram">
+                    <div class="diagram-title">Tidal Energy System Block Diagram</div>
+                    <div class="flow-container">
+                        <div class="flow-box">Ocean Tides (Gravitational Pull of Moon &amp; Sun)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Tidal Barrage/Turbines</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Mechanical Energy (Rotating Turbines)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Generator (Electromagnetic Conversion)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Electrical Energy Output</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Power Grid Distribution</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Detailed Explanation</h3>
+                <p class="explanation">
+                    Tidal energy harnesses the kinetic energy generated by the rise and fall of ocean tides, driven primarily by the gravitational forces of the moon and sun. The source of energy is the predictable movement of massive volumes of water during tidal cycles. Tidal barrages or underwater turbines are strategically positioned in coastal areas with significant tidal ranges. As tides flow in and out, water passes through turbines, causing them to rotate. This mechanical rotation drives generators that convert kinetic energy into electrical energy through electromagnetic induction. The generated electricity is then transmitted to the power grid for distribution to homes and industries. Tidal energy is highly predictable compared to other renewables, making it reliable for base-load power generation. Real-world applications include the La Rance Tidal Power Station in France and the MeyGen project in Scotland, demonstrating tidal energy's viability for large-scale electricity production in coastal regions with suitable tidal conditions.
+                </p>
+
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>🌊 Energy Source</h4>
+                        <p>Gravitational forces from the moon and sun creating predictable tidal movements in oceans</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>⚙️ Conversion Process</h4>
+                        <p>Kinetic energy → Mechanical energy → Electrical energy via turbines and generators</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>⚡ Output/Utilization</h4>
+                        <p>Clean electrical power for grid distribution to homes and industries</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>🌍 Real-World Application</h4>
+                        <p>Coastal power stations providing reliable base-load renewable electricity</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity 2: Biomass Energy -->
+        <section class="activity-section" id="activity2">
+            <div class="header">
+                <div class="header-content">
+                    <h2>🌾 Activity 2: Biomass Energy</h2>
+                    <p>Converting organic materials into sustainable energy solutions</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Visual Overview</h3>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80" alt="Biomass power plant facility" style="width: 100%; max-width: 800px; border-radius: 12px; box-shadow: var(--shadow-md);">
+                    <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 8px;">Modern biomass energy conversion facility</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>System Architecture</h3>
+                <div class="diagram">
+                    <div class="diagram-title">Biomass Energy System Block Diagram</div>
+                    <div class="flow-container">
+                        <div class="flow-box">Biomass Feedstock (Agricultural Waste, Wood, Crops)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Collection &amp; Processing</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Conversion Process (Combustion/Gasification/Anaerobic Digestion)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Heat Energy or Biogas Production</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Steam Turbine/Generator or Direct Use</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Electricity, Heat, or Biofuel Output</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Detailed Explanation</h3>
+                <p class="explanation">
+                    Biomass energy utilizes organic materials from plants and animals as renewable energy sources. The feedstock includes agricultural residues, forestry waste, dedicated energy crops, and organic municipal waste. The conversion process varies: direct combustion burns biomass to produce heat, gasification converts it to syngas, while anaerobic digestion breaks down organic matter producing biogas. During combustion, chemical energy stored in biomass is released as heat, which generates steam to drive turbines connected to generators for electricity production. Alternatively, biogas from digestion can fuel engines or be upgraded to biomethane. The output includes electricity, thermal energy for heating, and transportation biofuels. Biomass is carbon-neutral when sustainably managed, as CO₂ released during combustion equals the amount absorbed during plant growth. Real-world applications span industrial co-generation plants, rural electrification projects, waste-to-energy facilities, and biofuel production for vehicles, particularly benefiting agricultural communities by converting waste into valuable energy resources.
+                </p>
+
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>🌾 Energy Source</h4>
+                        <p>Organic materials including crops, agricultural waste, wood, and animal waste</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>⚙️ Conversion Process</h4>
+                        <p>Combustion, gasification, or anaerobic digestion to release stored chemical energy</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>⚡ Output/Utilization</h4>
+                        <p>Electricity, heat for industrial processes, and biofuels for transportation</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>🌍 Real-World Application</h4>
+                        <p>Agricultural waste-to-energy plants and industrial co-generation facilities</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity 3: Geothermal Energy -->
+        <section class="activity-section" id="activity3">
+            <div class="header">
+                <div class="header-content">
+                    <h2>🌋 Activity 3: Geothermal Energy</h2>
+                    <p>Tapping into Earth's internal heat for sustainable power generation</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Visual Overview</h3>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=800&q=80" alt="Geothermal power plant with steam vents" style="width: 100%; max-width: 800px; border-radius: 12px; box-shadow: var(--shadow-md);">
+                    <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 8px;">Geothermal power station utilizing Earth's heat</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>System Architecture</h3>
+                <div class="diagram">
+                    <div class="diagram-title">Geothermal Energy System Block Diagram</div>
+                    <div class="flow-container">
+                        <div class="flow-box">Earth's Core Heat (Radioactive Decay)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Underground Hot Water/Steam Reservoirs</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Production Wells (Deep Drilling)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Heat Extraction (Steam/Hot Water)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Steam Turbine</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Generator (Electrical Conversion)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-box">Electricity Output + Cooling &amp; Re-injection</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Detailed Explanation</h3>
+                <p class="explanation">
+                    Geothermal energy exploits the Earth's internal heat, originating from radioactive decay and residual heat from planetary formation. The energy source is naturally occurring hot water and steam reservoirs located 1-3 kilometers beneath the surface in geologically active regions. Production wells are drilled to access these reservoirs, extracting high-temperature fluids. The conversion process channels steam directly to turbines, or uses binary cycle systems where hot water transfers heat to a secondary fluid with a lower boiling point. The steam rotates turbines connected to generators, converting thermal and mechanical energy into electricity through electromagnetic induction. After energy extraction, cooled water is re-injected into the reservoir, creating a sustainable cycle. The output is continuous base-load electricity with minimal carbon emissions. Geothermal power plants have capacity factors exceeding 90%, making them more reliable than intermittent renewables. Real-world applications include Iceland's extensive geothermal infrastructure providing heating and electricity, The Geysers in California, and New Zealand's geothermal plants, demonstrating reliable renewable power in tectonically active areas.
+                </p>
+
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>🌋 Energy Source</h4>
+                        <p>Earth's internal heat from radioactive decay and residual planetary formation</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>⚙️ Conversion Process</h4>
+                        <p>Thermal energy → Steam pressure → Mechanical rotation → Electrical energy</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>⚡ Output/Utilization</h4>
+                        <p>Continuous base-load electricity and direct heating for buildings and industries</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>🌍 Real-World Application</h4>
+                        <p>Geothermal power plants in Iceland, California, and volcanic regions worldwide</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const activitySections = document.querySelectorAll('.activity-section');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        // Toggle menu
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible');
+        });
+
+        // Close menu when clicking overlay
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('visible');
+        });
+
+        function navigateToActivity(activityId) {
+            // Remove active class from all links and sections
+            navLinks.forEach(l => l.classList.remove('active'));
+            activitySections.forEach(s => s.classList.remove('active'));
+            
+            // Add active class to corresponding section
+            document.getElementById(activityId).classList.add('active');
+            
+            // Find and activate the corresponding nav link
+            const targetLink = document.querySelector(`[data-activity="${activityId}"]`);
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const activityId = this.getAttribute('data-activity');
+                navigateToActivity(activityId);
+                
+                // Close sidebar
+                sidebar.classList.remove('open');
+                overlay.classList.remove('visible');
+            });
+        });
+    </script>
+</body>
+</html>
